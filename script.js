@@ -15,11 +15,31 @@ function addDivs(num){
             const square = document.createElement('div');
             square.classList.add('squares');
             if(j == num - 1) {square.style.cssText = "border-right: 0px"};
-            square.addEventListener('click', function(e) {this.style.cssText = "background-color:grey;"});
+            // adds the sketch functionnality
+            square.addEventListener('mouseenter', function(e) {this.style.cssText = "background-color:grey;"});
             row.appendChild(square);
         }
         container.appendChild(row);
     }
 }
 
+function promptNum(){
+    const input = parseInt(window.prompt('Enter a number below 100 please:'));
+    if(isNaN(input) || input > 100 ){
+        return promptNum();
+    }
+    return input;
+}
+
+function clearAll(e){
+    const divs = document.querySelectorAll('.squares');
+    const rows = document.querySelectorAll('.rows');
+    divs.forEach(item => item.remove());
+    rows.forEach(item => item.remove());
+    addDivs(promptNum());
+}
+
 addDivs(squareNumbers);
+
+const btn = document.querySelector('button[value="clear"]');
+btn.addEventListener('click', clearAll);
